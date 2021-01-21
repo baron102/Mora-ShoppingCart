@@ -1,0 +1,37 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";} @*Use custom layout*@
+@using ASPMVCShoppingCart.Models @*For tblProduct Class*@
+@using PagedList.Mvc; @*//import this so we get our HTML Helper*@
+@using PagedList; @*//import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+@{
+    ViewBag.Title = "Beverages";
+}
+
+<!-- import the included stylesheet for some (very basic) default styling -->
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+    @*Heading*@
+    <h2 class="wow pulse">Fresh Beverages</h2>
+    
+    @*Products*@
+    <table class="table table-striped table-hover wow slideInLeft" style=" width:35%;">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Buy</th>
+        </tr>
+
+        @*Retrieve products from the ViewBag*@
+        @foreach (tblProduct p in ViewBag.ListProducts)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>£ @Math.Round(p.Price,2)</td>
+                <td>
+                    @Html.ActionLink("Order Now", "OrderNow", "ShoppingCart", new { id = p.Id }, new { @class = "btn btn-default" })
+                </td>
+            </tr>
+        }
+    </table>
+    
+    <!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+    @Html.PagedListPager((IPagedList)ViewBag.ListProducts, page => Url.Action("Index", new { page }))

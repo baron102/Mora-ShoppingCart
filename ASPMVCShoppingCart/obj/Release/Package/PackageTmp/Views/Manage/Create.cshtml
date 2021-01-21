@@ -1,0 +1,44 @@
+﻿@model ASPMVCShoppingCart.Models.tblProduct  
+@{Layout = "~/Views/Shared/_Layout.cshtml";} @*Use custom layout*@
+@{
+    ViewBag.Title = "Create";
+}
+@*Heading*@
+<h2 class="wow pulse">Add New Product</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset style="width:40%" class="wow slideInLeft">
+        <legend>To Product list</legend>
+        
+        <div class="editor-label" style="padding-bottom:15px;">
+            @Html.LabelFor(model => model.Name)
+        </div>
+ 
+            <input class="form-control" type="text" name="Name" id="Name" placeholder="Enter Make Here">
+            @Html.ValidationMessageFor(model => model.Name)
+        
+        <div class="editor-label" style="padding-bottom:15px; padding-top:15px;">
+            @Html.LabelFor(model => model.Price)   
+        </div>
+
+        
+            <input class="form-control" type="number" name="Price" id="Price" placeholder="Enter Price Here">
+            @Html.ValidationMessageFor(model => model.Price)
+        
+
+        <p style="padding-top:20px;">
+            <input type="submit" class="btn btn-default" value="Add New" />
+        </p>
+    </fieldset>   
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*Validation scripts references*@
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />

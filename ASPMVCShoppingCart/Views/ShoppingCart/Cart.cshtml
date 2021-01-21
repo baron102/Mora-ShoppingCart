@@ -1,0 +1,51 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";} @*Use custom layout*@
+@using ASPMVCShoppingCart.Controllers; 
+@{
+    ViewBag.Title = "Your Cart";
+}
+
+    @*Heading*@
+    <h2 class="wow fadeInUp">Your Cart</h2>
+    
+    @*Cart*@
+    <table class="table table-striped table-hover" style=" width:55%;">       
+        
+        @*Table Headings*@
+        <tr>
+            <th>Option</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sub Total</th>
+        </tr>
+
+        @{
+            decimal s = 0; // To Store total 
+        }
+
+        @foreach (Item item in (List<Item>)Session["cart"]) // Display each item from cart
+        {
+
+            s = s + item.Product.Price * item.Quantity; // Get the Sum of all products
+
+             <tr>
+                @*ActionLink to remove products based on their id*@
+                <td>@Html.ActionLink("Remove", "Delete", "ShoppingCart", new { id = item.Product.Id }, new { @class = "btn btn-danger" })</td>
+                <td>@item.Product.Id</td>
+                <td>@item.Product.Name</td>
+                <td>£ @Math.Round(item.Product.Price,2)</td>
+                <td>@item.Quantity</td>
+                <td>£ @Math.Round((item.Product.Price * item.Quantity),2)</td>
+            </tr>
+        }
+        <tr>
+            <td align="right" colspan="5"><strong>Sum:</strong></td>
+            <td>£ @Math.Round(s,2)</td>
+        </tr>
+    </table>
+
+    <p>
+    @Html.ActionLink("Continue Shopping", "Index", "Product")
+    </p>
+    

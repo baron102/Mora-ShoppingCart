@@ -1,0 +1,49 @@
+﻿@model ASPMVCShoppingCart.Models.tblProduct
+@{Layout = "~/Views/Shared/_Layout.cshtml";} @*Use custom layout*@
+@{
+    ViewBag.Title = "Edit";
+}
+
+@*Heading*@
+<h2 class="wow pulse">Edit Product</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset style="width:40%" class="wow slideInLeft">
+        <legend>Description</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label" style="padding-bottom:15px;">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" } )
+            
+            
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label" style="padding-bottom:15px;  padding-top:15px;">
+            @Html.LabelFor(model => model.Price)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Price, new { @class = "form-control" } )
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+
+        <p style="padding-top:20px;">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </p>
+    </fieldset>
+}
+
+<div style="padding-top:15px;">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*Validation scripts references*@
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
